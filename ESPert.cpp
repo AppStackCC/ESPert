@@ -1688,3 +1688,133 @@ void ESPert_Buzzer::off( )
 {
   analogWrite(pin, 0);       // 0 turns it off
 }
+
+// *************************************************
+// Robot class
+// *************************************************
+void ESPert_Robot::init(uint8_t ml_1, uint8_t ml_2, uint8_t mr_1, uint8_t mr_2)
+{
+    this->_ml_1 = ml_1;
+    this->_ml_2 = ml_2;
+    this->_mr_1 = mr_1;
+    this->_mr_2 = ml_2;
+    this->_speed = 255;
+    pinMode(ml_1, OUTPUT);
+    pinMode(ml_2, OUTPUT);
+    pinMode(mr_1, OUTPUT);
+    pinMode(mr_2, OUTPUT);
+}
+
+void ESPert_Robot::Front()
+{
+    this->Drive(DirectionFront);
+}
+
+void ESPert_Robot::FrontLeft()
+{
+    this->Drive(DirectionFrontLeft);
+}
+
+void ESPert_Robot::FrontRight()
+{
+    this->Drive(DirectionFrontRigh);
+}
+
+void ESPert_Robot::Left()
+{
+    this->Drive(DirectionLeft);
+}
+
+void ESPert_Robot::Right()
+{
+    this->Drive(DirectionRight);
+}
+
+void ESPert_Robot::Back()
+{
+    this->Drive(DirectionBack);
+}
+
+void ESPert_Robot::BackLeft()
+{
+    this->Drive(DirectionBackLeft);
+}
+
+void ESPert_Robot::BackRight()
+{
+    this->Drive(DirectionBackRight);
+}
+
+void ESPert_Robot::Stop()
+{
+    this->Drive(DirectionStop);
+}
+
+void ESPert_Robot::Drive(uint8_t direction)
+{
+    uint8_t data_ml_1 = (direction >> 3) & 0x01;
+    uint8_t data_ml_2 = (direction >> 2) & 0x01;
+    uint8_t data_mr_1 = (direction >> 1) & 0x01;
+    uint8_t data_mr_2 = direction & 0x01;
+
+    if (data_ml_1)
+    {
+        if (this->_speed == 255)
+            digitalWrite(this->_ml_1,HIGH);
+        else
+            analogWrite(this->_ml_1,this->_speed);
+    }
+    else
+    {
+        digitalWrite(this->_ml_1,LOW);
+    }
+
+    if (data_ml_2)
+    {
+        if (this->_speed == 255)
+            digitalWrite(this->_ml_2,HIGH);
+        else
+            analogWrite(this->_ml_2,this->_speed);
+    }
+    else
+    {
+        digitalWrite(this->_ml_2,LOW);
+    }
+
+    if (data_mr_1)
+    {
+        if (this->_speed == 255)
+            digitalWrite(this->_mr_1,HIGH);
+        else
+            analogWrite(this->_mr_1,this->_speed);
+    }
+    else
+    {
+        digitalWrite(this->_mr_1,LOW);
+    }
+
+    if (data_mr_1)
+    {
+        if (this->_speed == 255)
+            digitalWrite(this->_mr_2,HIGH);
+        else
+            analogWrite(this->_mr_2,this->_speed);
+    }
+    else
+    {
+        digitalWrite(this->_mr_2,LOW);
+    }
+}
+
+void ESPert_Robot::Drive(uint8_t direction , uint8_t speed)
+{
+    this->SetSpeed(speed);
+    this->Drive(direction);
+}
+
+void ESPert_Robot::SetSpeed(uint8_t speed)
+{
+    this->_speed = speed;
+}
+
+

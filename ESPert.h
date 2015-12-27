@@ -343,6 +343,41 @@ class ESPert_Buzzer
     void off();
 };
 
+#define DirectionFront      0x05   // 0 1 0 1
+#define DirectionFrontLeft  0x01   // 0 0 0 1
+#define DirectionFrontRigh  0x04   // 0 1 0 0
+#define DirectionLeft       0x09   // 1 0 0 1
+#define DirectionRight      0x06   // 0 1 1 0
+#define DirectionBack       0x0A   // 1 0 1 0
+#define DirectionBackLeft   0x02   // 0 0 1 0
+#define DirectionBackRight  0x08   // 1 0 0 0
+#define DirectionStop       0x00   // 0 0 0 0
+
+class ESPert_Robot
+{
+  private:
+    uint8_t _ml_1;
+    uint8_t _ml_2;
+    uint8_t _mr_1;
+    uint8_t _mr_2;
+    uint8_t _speed;
+
+  public:
+    void init(uint8_t ml_1 = 14 , uint8_t ml_2 = 12 , uint8_t mr_1 = 13 , uint8_t mr_2 = 15);
+    void Front();
+    void FrontLeft();
+    void FrontRight();
+    void Left();
+    void Right();
+    void Back();
+    void BackLeft();
+    void BackRight();
+    void Stop();
+    void Drive(uint8_t direction);
+    void Drive(uint8_t direction , uint8_t speed);
+    void SetSpeed(uint8_t speed);
+};
+
 
 class ESPert : public Print
 {
@@ -360,6 +395,7 @@ class ESPert : public Print
     ESPert_SoftwareSerial swSerial;
     ESPert_WiFi           wifi;
     ESPert_Buzzer         buzzer;
+    ESPert_Robot          robot;
 
     ESPert();
     void init(int type = ESPERT_BOARD_ESPRESSO_LITE);
