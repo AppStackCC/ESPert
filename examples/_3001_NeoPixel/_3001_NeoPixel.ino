@@ -1,5 +1,5 @@
 #include "ESPert.h"
-
+#define _ESPERT_NEOPIXEL_
 ESPert espert;
 
 void setup()
